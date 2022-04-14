@@ -5,13 +5,13 @@ import { httpsCallable } from 'firebase/functions';
 import { useState } from 'react';
 import domtoimage from 'dom-to-image';
 import { connectFunctionsEmulator } from 'firebase/functions';
-
+import { saveAs } from 'file-saver'
 connectFunctionsEmulator(functions, 'localhost', 5001);
 
 function App() {
   const iphoneWidth = 175;
   const macbookHeight = 500;
-  const ipadWidth = 500;
+  const ipadWidth = 350;
   const [customToken, setCustomToken] = useState('');
   const [errorToken, setError] = useState('');
   const [images, setImages] = useState({
@@ -150,7 +150,7 @@ function App() {
             <div className="container-ipad">
               <img
                 style={{
-                  width: ipadWidth * 0.94 + 'px'
+                  width: ipadWidth * 0.92 + 'px'
                 }}
                 src={images.ipad}
                 alt=""
@@ -176,8 +176,9 @@ function App() {
 }
 
 const download = () => {
-  domtoimage.toBlob(document.getElementById('my-node')).then(function (blob) {
-    window.saveAs(blob, 'my-node.png');
+  domtoimage.toBlob(document.getElementById('my-node'))
+  .then(function (blob) {
+      saveAs(blob, 'my-node.png');
   });
 };
 
